@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">To Do Tasks</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_input">Add Task Information</string>
+    <string name="title_activity_input">Add Task</string>
     <string name="save">SAVE</string>
+    <string name="in">Enter information</string>
     <string-array name="prioritylist">
         <item>Urgent</item>
         <item>Normal</item>

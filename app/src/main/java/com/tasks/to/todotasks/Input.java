@@ -36,6 +36,7 @@ public class Input extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("ADD TASK INFORMATION");
         //setSupportActionBar(toolbar);
 
         final EditText topi = (EditText) findViewById(R.id.topic1);

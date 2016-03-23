@@ -12,11 +12,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -26,7 +30,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.tasks.to.todotasks.db.DBHelper;
 import com.tasks.to.todotasks.db.TaskContract;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends ListActivity implements  OnItemClickListener {
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -38,9 +42,12 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // setSupportActionBar(toolbar);
-        uiupdate();
+       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+         //setSupportActionBar(toolbar);
+        //Toolbar.setTi
+
+
+                uiupdate();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +65,15 @@ public class MainActivity extends ListActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
 
     }
-
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        DBHelper helper = new DBHelper(MainActivity.this);
+        SQLiteDatabase sqlDB = helper.getReadableDatabase();
+        ListView l =(ListView)findViewById(android.R.id.list);
+        String item = l.getItemAtPosition(position).toString();
+        TextView t=(TextView)findViewById(R.id.g);
+        t.setText(item);
+    }
 
     @Override
     public void onResume() {
@@ -126,4 +141,8 @@ public class MainActivity extends ListActivity {
         uiupdate();
     }
 
+
+
+
+   /* */
 }
