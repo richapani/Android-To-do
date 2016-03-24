@@ -19,7 +19,9 @@
         android:textAllCaps="true"
         android:layout_toLeftOf="@+id/doneButton"
         android:layout_alignBottom="@+id/doneButton"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:onClick="onViewClick"/>
 
     <Button
         android:layout_width="wrap_content"

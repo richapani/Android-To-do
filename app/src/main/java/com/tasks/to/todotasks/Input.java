@@ -68,7 +68,7 @@ public class Input extends Activity {
                 String priority = priorityspinner.getSelectedItem().toString();
 
                 Spinner categoryspinner = (Spinner) findViewById(R.id.categoryspinner);
-                String category = priorityspinner.getSelectedItem().toString();
+                String category = categoryspinner.getSelectedItem().toString();
 
                 Log.d("MainActivity", topic);
 
@@ -95,9 +95,9 @@ public class Input extends Activity {
                 values.clear();
                 values.put(TaskContract.Columns.TASK, topic);
 
-               values.put ( TaskContract.Columns.About,task);
-              //  values.put(TaskContract.Columns.Priority,priority);
-               // values.put (TaskContract.Columns.Category,category);
+                    values.put ( TaskContract.Columns.About,task);
+                     values.put(TaskContract.Columns.Priority,priority);
+                    values.put (TaskContract.Columns.Category,category);
 
                 db.insert(TaskContract.TABLE, null, values);
                finish();

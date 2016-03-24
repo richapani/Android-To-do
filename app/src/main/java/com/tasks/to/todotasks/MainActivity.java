@@ -1,6 +1,7 @@
 package com.tasks.to.todotasks;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -30,7 +31,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.tasks.to.todotasks.db.DBHelper;
 import com.tasks.to.todotasks.db.TaskContract;
 
-public class MainActivity extends ListActivity implements  OnItemClickListener {
+public class MainActivity extends ListActivity {
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -47,7 +48,7 @@ public class MainActivity extends ListActivity implements  OnItemClickListener {
         //Toolbar.setTi
 
 
-                uiupdate();
+        uiupdate();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,15 +66,15 @@ public class MainActivity extends ListActivity implements  OnItemClickListener {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
 
     }
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        DBHelper helper = new DBHelper(MainActivity.this);
-        SQLiteDatabase sqlDB = helper.getReadableDatabase();
-        ListView l =(ListView)findViewById(android.R.id.list);
-        String item = l.getItemAtPosition(position).toString();
-        TextView t=(TextView)findViewById(R.id.g);
-        t.setText(item);
-    }
+   // @Override
+   // public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+       // DBHelper helper = new DBHelper(MainActivity.this);
+        //SQLiteDatabase sqlDB = helper.getReadableDatabase();
+
+        //String item = l.getItemAtPosition(position).toString();
+        //TextView t=(TextView)findViewById(R.id.g);
+        //t.setText(item);
+    //}
 
     @Override
     public void onResume() {
@@ -100,7 +101,14 @@ public class MainActivity extends ListActivity implements  OnItemClickListener {
         if (id == R.id.action_settings) {
             return true;
         }
-
+        ListView l =(ListView)findViewById(android.R.id.list);
+        l.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                TextView t=(TextView)findViewById(R.id.g);
+                t.setText("ghgrhg");
+        }});
         return super.onOptionsItemSelected(item);
     }//*/
 
@@ -139,6 +147,33 @@ public class MainActivity extends ListActivity implements  OnItemClickListener {
         SQLiteDatabase sqlDB = helper.getWritableDatabase();
         sqlDB.execSQL(sql);
         uiupdate();
+    }
+    public void onViewClick(View view) {
+        View v = (View) view.getParent();
+       TextView taskTextView = (TextView) v.findViewById(R.id.taskView);
+        String task = taskTextView.getText().toString();
+        DBHelper helper = new DBHelper(MainActivity.this);
+        SQLiteDatabase sqlDB = helper.getWritableDatabase();
+
+        String sql = String.format("SELECT * FROM %s WHERE %s = '%s'",
+                TaskContract.TABLE,
+                TaskContract.Columns.TASK,
+                task);
+        Cursor cursor = sqlDB.rawQuery(sql, null);
+        cursor.moveToFirst();
+        //TextView t=(TextView)findViewById(R.id.g);
+        //t.setText(cursor.getString(4));
+        String topic=cursor.getString(1);
+        String about=cursor.getString(2);
+        String priority=cursor.getString(3);
+        String category=cursor.getString(4);
+        Intent showIntent = new Intent(MainActivity.this, Show.class);
+        showIntent.putExtra("topic",topic);
+        showIntent.putExtra("about",about);
+        showIntent.putExtra("priority",priority);
+        showIntent.putExtra("category",category);
+        MainActivity.this.startActivity(showIntent);
+
     }
 
 
